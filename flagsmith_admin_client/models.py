@@ -3,11 +3,7 @@ from pydantic import BaseModel, ConfigDict, Field, AliasChoices, model_validator
 
 class _BaseModel(BaseModel):
     model_config = ConfigDict(extra="ignore")
-    id: int = None
-
-    @property
-    def is_created(self):
-        return self.id is not None
+    id: int | None = None
 
 
 class Organisation(_BaseModel):

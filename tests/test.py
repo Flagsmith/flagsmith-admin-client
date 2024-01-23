@@ -7,7 +7,7 @@ from flagsmith_admin_client.models import Organisation, Project, Environment, Fe
 
 @pytest.fixture()
 def auth_token() -> str:
-    return ""
+    return "1aa8568202cb644f6663cd091c702b1365ebc2dc"
 
 
 @pytest.fixture()
@@ -19,19 +19,19 @@ def test(client) -> None:
     organisation = Organisation(name="test from admin client")
 
     try:
-        organisation = client.create_organisation(organisation)
+        organisation = client.create_organisation("test from admin client")
         assert organisation.id is not None
 
-        project = client.create_project(Project(name="Test project", organisation_id=organisation.id))
+        project = client.create_project(name="Test project", organisation_id=organisation.id)
         assert project.id
 
-        environment = client.create_environment(Environment(name="Test environment", project_id=project.id))
+        environment = client.create_environment(name="Test environment", project_id=project.id)
         assert environment.id
 
-        feature = client.create_feature(Feature(name="test_feature", project_id=project.id))
+        feature = client.create_feature(name="test_feature", project_id=project.id)
         assert feature.id
 
-        segment = Segment(
+        segment = client.create_segment(
             name="test segment",
             project_id=project.id,
             rules=[
@@ -50,7 +50,6 @@ def test(client) -> None:
                 )
             ]
         )
-        segment = client.create_segment(segment)
         assert segment.id is not None
 
     finally:
