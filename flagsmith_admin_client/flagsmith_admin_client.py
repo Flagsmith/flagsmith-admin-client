@@ -37,7 +37,7 @@ class FlagsmithAdminClient:
         uri = "/projects/"
         query_params = {"organisation": str(organisation_id)}
         response = self._make_request(uri, query_params=query_params)
-        return [Project.model_validate(result) for result in response.json()["results"]]
+        return [Project.model_validate(result) for result in response.json()]
 
     def get_project_by_name(self, organisation_id: int, name: str) -> list[Project]:
         return next(filter(lambda p: p.name == name, self.get_projects(organisation_id)))
