@@ -94,7 +94,6 @@ class FlagsmithAdminClient:
         )
         assert response
 
-
     def create_segment(self, name: str, project_id: int, rules: list[SegmentRule]) -> Segment:
         segment = Segment.model_validate(
             {
