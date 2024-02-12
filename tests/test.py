@@ -1,8 +1,7 @@
 import pytest
 
 from flagsmith_admin_client.flagsmith_admin_client import FlagsmithAdminClient
-from flagsmith_admin_client.models import Organisation, Project, Environment, Feature, Segment, SegmentRule, \
-    SegmentCondition
+from flagsmith_admin_client.models import Organisation, SegmentRule, SegmentCondition
 
 
 @pytest.fixture()
@@ -30,6 +29,13 @@ def test(client) -> None:
 
         feature = client.create_feature(name="test_feature", project_id=project.id)
         assert feature.id
+
+        client.update_flag(
+            feature_id=feature.id,
+            environment_key=environment.api_key,
+            enabled=True,
+            value="foo"
+        )
 
         segment = client.create_segment(
             name="test segment",

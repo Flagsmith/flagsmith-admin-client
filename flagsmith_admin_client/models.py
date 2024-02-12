@@ -18,6 +18,7 @@ class Project(_BaseModel):
 class Environment(_BaseModel):
     name: str
     project_id: int = Field(validation_alias=AliasChoices("project_id", "project"), serialization_alias="project")
+    api_key: str
 
 
 class Feature(_BaseModel):

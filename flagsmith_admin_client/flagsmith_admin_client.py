@@ -1,3 +1,4 @@
+import typing
 from typing import Any
 
 from requests import Session, Response
@@ -69,6 +70,30 @@ class FlagsmithAdminClient:
         return Feature.model_validate(response.json())
 
     # TODO: more feature methods
+
+    def update_flag(self, feature_id: int, environment_key: str, enabled: bool, value: typing.Any) -> None:
+        # get the feature state id of the feature in the environment
+        response = self._make_request(
+            f"/environments/{environment_key}/featurestates/",
+            method="GET",
+            query_params={"feature_id": str(feature_id)}
+        )
+        response_json = response.json()
+        assert response_json["count"] == 1, "Expected 1 response, got {}".format(response_json["count"])
+        feature_state_id = response_json["results"][0]["id"]
+
+        data = {
+            "enabled": enabled,
+            "feature_state_value": value,
+        }
+
+        response = self._make_request(
+            f"/environments/{environment_key}/featurestates/{feature_state_id}/",
+            method="PATCH",
+            json_data=data
+        )
+        assert response
+
 
     def create_segment(self, name: str, project_id: int, rules: list[SegmentRule]) -> Segment:
         segment = Segment.model_validate(
