@@ -76,7 +76,7 @@ class FlagsmithAdminClient:
         response = self._make_request(
             f"/environments/{environment_key}/featurestates/",
             method="GET",
-            query_params={"feature_id": str(feature_id)}
+            query_params={"feature": str(feature_id)}
         )
         response_json = response.json()
         assert response_json["count"] == 1, "Expected 1 response, got {}".format(response_json["count"])
