@@ -6,7 +6,8 @@ from flagsmith_admin_client.models import Organisation, SegmentRule, SegmentCond
 
 @pytest.fixture()
 def auth_token() -> str:
-    return "1aa8568202cb644f6663cd091c702b1365ebc2dc"
+    # Add API token here
+    return ""
 
 
 @pytest.fixture()
