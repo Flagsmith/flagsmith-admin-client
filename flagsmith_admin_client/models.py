@@ -23,7 +23,11 @@ class Environment(_BaseModel):
 
 class Feature(_BaseModel):
     name: str
-    project_id: int = Field(validation_alias=AliasChoices("project_id", "project"), serialization_alias="project")
+    project_id: int = Field(
+        validation_alias=AliasChoices("project_id", "project"),
+        serialization_alias="project",
+        default=None
+    )
 
 
 class SegmentCondition(_BaseModel):
