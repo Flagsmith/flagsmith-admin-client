@@ -31,6 +31,10 @@ def test(client) -> None:
         feature = client.create_feature(name="test_feature", project_id=project.id)
         assert feature.id
 
+        client.create_feature(name="test_feature2", project_id=project.id)
+        features = client.get_features(project_id=project.id, environment_id=environment.id, page_size=1)
+        assert len(list(features)) == 2
+
         client.update_flag(
             feature_id=feature.id,
             environment_key=environment.api_key,
