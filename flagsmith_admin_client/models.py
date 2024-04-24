@@ -16,12 +16,18 @@ class Organisation(_BaseModel):
 
 class Project(_BaseModel):
     name: str
-    organisation_id: int = Field(validation_alias=AliasChoices("organisation_id", "organisation"), serialization_alias="organisation")
+    organisation_id: int = Field(
+        validation_alias=AliasChoices("organisation_id", "organisation"),
+        serialization_alias="organisation",
+    )
 
 
 class Environment(_BaseModel):
     name: str
-    project_id: int = Field(validation_alias=AliasChoices("project_id", "project"), serialization_alias="project")
+    project_id: int = Field(
+        validation_alias=AliasChoices("project_id", "project"),
+        serialization_alias="project",
+    )
     api_key: str
 
 
@@ -56,7 +62,7 @@ class Feature(_BaseModel):
     project_id: int = Field(
         validation_alias=AliasChoices("project_id", "project"),
         serialization_alias="project",
-        default=None
+        default=None,
     )
     num_segment_overrides: Optional[int] = 0
     num_identity_overrides: Optional[int] = 0
@@ -84,7 +90,10 @@ class SegmentRule(_BaseModel):
 
 class Segment(_BaseModel):
     name: str
-    project_id: int = Field(validation_alias=AliasChoices("project_id", "project"), serialization_alias="project")
+    project_id: int = Field(
+        validation_alias=AliasChoices("project_id", "project"),
+        serialization_alias="project",
+    )
     rules: list[SegmentRule] = Field(default_factory=list)
 
     @model_validator(mode="after")
