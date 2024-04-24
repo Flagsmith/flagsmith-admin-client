@@ -1,4 +1,5 @@
 import pytest
+import uuid
 
 from flagsmith_admin_client.flagsmith_admin_client import FlagsmithAdminClient
 from flagsmith_admin_client.models import Organisation, SegmentRule, SegmentCondition
@@ -14,12 +15,12 @@ def auth_token() -> str:
 def client(auth_token: str) -> FlagsmithAdminClient:
     return FlagsmithAdminClient(auth_token)
 
-
 def test(client) -> None:
-    organisation = Organisation(name="test from admin client")
+    orgName = f"flagsmith-admin-client tests: {uuid.uuid4()}"
+    organisation = Organisation(name=orgName)
 
     try:
-        organisation = client.create_organisation("test from admin client")
+        organisation = client.create_organisation(name=orgName)
         assert organisation.id is not None
 
         project = client.create_project(name="Test project", organisation_id=organisation.id)
