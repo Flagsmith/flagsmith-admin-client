@@ -13,4 +13,3 @@ poetry install
 ```shell
 poetry run pytest
 ```
-
