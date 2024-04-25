@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "flagsmith-admin-client"
+version = "0.1.0"
+description = ""
+authors = ["Matthew Elwell <matthew.elwell@flagsmith.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.31"
+pydantic = "^2.5"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
