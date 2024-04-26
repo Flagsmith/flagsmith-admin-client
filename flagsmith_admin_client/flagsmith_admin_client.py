@@ -41,6 +41,10 @@ class FlagsmithAdminClient:
     def delete_organisation(self, organisation: Organisation) -> None:
         self._make_request(f"/organisations/{organisation.id}/", method="DELETE")
 
+    def get_project(self, project_id: int) -> Project:
+        project = self._make_request(f"/project/{project_id}")
+        return Project.model_validate(project)
+
     def get_projects(self, organisation_id: int) -> list[Project]:
         uri = "/projects/"
         query_params = {"organisation": str(organisation_id)}
@@ -85,7 +89,7 @@ class FlagsmithAdminClient:
     def get_features(
         self,
         project_id: int,
-        environment_id: str,
+        environment_id: int,
         page_size: int | None = None,
         is_archived: bool = False
     ) -> Generator[Feature, None, None]:
