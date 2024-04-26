@@ -1,5 +1,19 @@
-# flaagsmith-admin-client
-Flagsmith Admin Client
+=======
+# Flagsmith Admin API client
+
+Python SDK for interacting with the Flagsmith Admin API.
+
+## Local setup
+
+```shell
+poetry install
+```
+
+## Tests
+
+```shell
+poetry run pytest
+```
 
 ## Examples
 
@@ -8,4 +22,3 @@ Flagsmith Admin Client
 ```
 export FLAGSMITH_TOKEN="..."
 python examples/features-to-csv.py
-```
