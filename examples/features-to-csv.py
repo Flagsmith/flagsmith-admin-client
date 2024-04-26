@@ -14,7 +14,6 @@ def format_date(date: datetime):
 excluded_fields = [
     "environment_state",
     "multivariate_options",
-    "default_enabled",
     "initial_value",
     "tags",
     "project_id",
@@ -27,7 +26,7 @@ organisation = client.get_organisation_by_name("Flagsmith")
 properties = Feature.model_json_schema()["properties"]
 for f in excluded_fields:
     del properties[f]
-fieldnames = ["project", "environment", *list(properties), "environment_value_differs"]
+fieldnames = ["project", "environment", "enabled", *list(properties)]
 
 filename_date = datetime.now().isoformat(timespec="seconds")
 filename = f"Flagsmith features - {organisation.name} - {filename_date}.csv"
@@ -45,13 +44,11 @@ with open(filename, "w", encoding="utf-8") as file:
             ):
                 features_saved += 1
                 dict = f.model_dump(exclude=excluded_fields)
+                # Avoids writing actual feature value in case it's sensitive
+                dict["enabled"] = f.environment_state.enabled
                 dict["created_date"] = format_date(f.created_date)
                 dict["environment"] = e.name
                 dict["project"] = p.name
-                # Avoids writing actual feature value in case it's sensitive
-                dict["environment_value_differs"] = (
-                    f.environment_state and f.environment_state.value != f.initial_value
-                )
                 dict["last_modified_in_any_environment"] = format_date(
                     f.last_modified_in_any_environment
                 )
